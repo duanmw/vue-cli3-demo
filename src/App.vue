@@ -2,81 +2,129 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <el-button type="primary" @click="dialogFormVisible = true">打开Dialog</el-button>
-
-    <el-dialog title="XXX" :visible.sync="dialogFormVisible">
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
-      >
-        <el-row>
-          <el-col :span="22">
-            <el-form-item label="活动名称" prop="name">
-              <el-input v-model="ruleForm.name" size="medium" clearable></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="2" class="ques-icon">
-            <el-tooltip content="tip Top center" placement="right" effect="light">
-              <i class="el-icon-question"></i>
-            </el-tooltip>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="22">
-            <el-form-item label="活动区域" prop="region">
-              <el-select
-                class="select"
-                v-model="ruleForm.region"
-                clearable
-                placeholder="请选择"
-                size="medium"
+    <el-container style="height: 100%; border: 1px solid #aaa">
+      <el-scrollbar :native="false">
+        <el-aside class="aside" width="200px" style="background-color: rgb(238, 241, 246)">
+          <el-menu style="height:100%" :default-openeds="['1']" router>
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>导航一</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item v-for="i in jobs" :key="i.name" :index="'/?name='+i.name">{{i.name}}</el-menu-item>
+                <!-- <template slot="title">分组一</template> -->
+                <!-- <el-menu-item index="/?id=12">选项1</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">选项2</el-menu-item>
+                <el-menu-item index="/about">last选项2</el-menu-item>-->
+              </el-menu-item-group>
+            </el-submenu>
+            <!-- <el-menu-item index="2">
+            <i class="el-icon-menu"></i>
+            <span slot="title">导航二</span>
+            </el-menu-item>-->
+          </el-menu>
+        </el-aside>
+      </el-scrollbar>
+      <!-- <el-aside>
+        <router-link v-for="i in jobs" :key="i.name" :to="'/'+i.name" tag="p">{{i.name}}</router-link>
+      </el-aside>-->
+      <el-scrollbar style="width:100%" :native="false">
+        <el-container class="main">
+          <el-header>
+            <div>{{$route.query.id}}</div>
+          </el-header>
+          <el-main>
+            <el-button type="primary" @click="dialogFormVisible = true">打开Dialog</el-button>
+            <el-dialog title="XXX" :visible.sync="dialogFormVisible">
+              <el-form
+                :model="ruleForm"
+                :rules="rules"
+                ref="ruleForm"
+                label-width="100px"
+                class="demo-ruleForm"
               >
-                <el-input
-                  class="inner-search"
-                  placeholder="请输入搜索"
-                  prefix-icon="el-icon-search"
-                  v-model="input21"
-                  size="small"
-                ></el-input>
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="2" class="ques-icon">
-            <el-tooltip content="tip tip" placement="right" effect="light">
-              <i class="el-icon-question"></i>
-            </el-tooltip>
-          </el-col>
-        </el-row>
-        <el-form-item label="活动性质" prop="type">
-          <el-checkbox-group v-model="ruleForm.type">
-            <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-            <el-checkbox label="地推活动" name="type"></el-checkbox>
-            <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-            <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="活动形式" prop="desc">
-          <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>
+                <el-row>
+                  <el-col :span="22">
+                    <el-form-item label="活动名称" prop="name">
+                      <el-input v-model="ruleForm.name" size="medium" clearable></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="2" class="ques-icon">
+                    <el-tooltip content="tip Top center" placement="right" effect="light">
+                      <i class="el-icon-question"></i>
+                    </el-tooltip>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="22">
+                    <el-form-item label="活动区域" prop="region">
+                      <el-select
+                        class="select"
+                        v-model="ruleForm.region"
+                        clearable
+                        placeholder="请选择"
+                        size="medium"
+                      >
+                        <el-input
+                          class="inner-search"
+                          placeholder="请输入搜索"
+                          prefix-icon="el-icon-search"
+                          v-model="input21"
+                          size="small"
+                        ></el-input>
+                        <el-option
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="2" class="ques-icon">
+                    <el-tooltip content="tip tip" placement="right" effect="light">
+                      <i class="el-icon-question"></i>
+                    </el-tooltip>
+                  </el-col>
+                </el-row>
+                <el-form-item label="活动性质" prop="type">
+                  <el-checkbox-group v-model="ruleForm.type">
+                    <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+                    <el-checkbox label="地推活动" name="type"></el-checkbox>
+                    <el-checkbox label="线下主题活动" name="type"></el-checkbox>
+                    <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+                  </el-checkbox-group>
+                </el-form-item>
+                <el-form-item label="活动形式" prop="desc">
+                  <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                  <el-button @click="resetForm('ruleForm')">重置</el-button>
+                </el-form-item>
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+              </div>
+            </el-dialog>
+            <router-view></router-view>
+          </el-main>
+        </el-container>
+      </el-scrollbar>
+    </el-container>
   </div>
 </template>
 
@@ -91,8 +139,42 @@ export default {
   },
   data() {
     return {
+      jobs: [
+        {
+          name: "aaa",
+          link: "aassa"
+        },
+        {
+          name: "bbb",
+          link: "babbsa"
+        },
+        {
+          name: "b12bb",
+          link: "babbsa"
+        },
+        {
+          name: "asb",
+          link: "babbsa"
+        },
+        {
+          name: "bbb",
+          link: "babbsa"
+        },
+        {
+          name: "bbb",
+          link: "babbsa"
+        },
+        {
+          name: "bbb",
+          link: "babbsa"
+        },
+        {
+          name: "last-bb",
+          link: "babbsa"
+        }
+      ],
       input21: "",
-      dialogFormVisible: true,
+      dialogFormVisible: false,
       options: [
         {
           value: "选项1",
@@ -155,15 +237,41 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     }
   }
 };
 </script>
 
-<style scoped>
-.box {
-  width: 600px;
+<style>
+html,
+body {
+  height: 100%;
+  overflow: hidden;
 }
+#app {
+  height: 100%;
+}
+el-scrollbar__view {
+  height: 100%;
+}
+.el-scrollbar__wrap {
+  overflow-x: hidden !important;
+}
+.aside {
+  height: 100%;
+  width: 100% !important;
+  overflow-x: hidden !important;
+}
+.main {
+  width: 100%;
+}
+
 .ques-icon {
   padding: 8px;
   font-size: 16px;

@@ -13,21 +13,6 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item v-for="i in jobs" :key="i.name" :index="'/?name='+i.name">{{i.name}}</el-menu-item>
-                <!-- <template slot="title">分组一</template> -->
-                <!-- <el-menu-item index="/?id=12">选项1</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">选项2</el-menu-item>
-                <el-menu-item index="/about">last选项2</el-menu-item>-->
               </el-menu-item-group>
             </el-submenu>
             <!-- <el-menu-item index="2">
@@ -44,9 +29,32 @@
         <el-container class="main">
           <el-header>
             <div>{{$route.query.id}}</div>
+            <el-row>
+              <el-col :span="23">
+                <el-progress
+                  :percentage="percentage"
+                  :status="percentage==100 ? 'success' : 'text'"
+                ></el-progress>
+              </el-col>
+              <el-col :span="1">
+                <i v-show="percentage<100" class="el-icon-loading"></i>
+              </el-col>
+            </el-row>
+
+            <!-- <vue-progress-bar></vue-progress-bar> -->
           </el-header>
           <el-main>
             <el-button type="primary" @click="dialogFormVisible = true">打开Dialog</el-button>
+
+            <el-progress
+              type="circle"
+              :width="100"
+              :percentage="percentage"
+              :status="percentage==100 ? 'success' : 'text'"
+            >
+              <i v-show="percentage<100" class="el-icon-loading"></i>
+              <!-- <i v-show="percentage=100" class="el-icon-loading"></i> -->
+            </el-progress>
             <el-dialog title="XXX" :visible.sync="dialogFormVisible">
               <el-form
                 :model="ruleForm"
@@ -139,6 +147,7 @@ export default {
   },
   data() {
     return {
+      percentage: 1,
       jobs: [
         {
           name: "aaa",
@@ -154,18 +163,6 @@ export default {
         },
         {
           name: "asb",
-          link: "babbsa"
-        },
-        {
-          name: "bbb",
-          link: "babbsa"
-        },
-        {
-          name: "bbb",
-          link: "babbsa"
-        },
-        {
-          name: "bbb",
           link: "babbsa"
         },
         {
@@ -244,6 +241,23 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     }
+  },
+  mounted() {
+    let that = this;
+    let total = 4000;
+    var per = 100;
+    console.log("---");
+    this.$Progress.start();
+    var timer = window.setInterval(function() {
+      console.log("---");
+      per = per + 200;
+      if (that.percentage < 100) {
+        that.percentage++;
+      } else {
+        window.clearInterval(timer);
+        that.$Progress.finish();
+      }
+    }, per);
   }
 };
 </script>
